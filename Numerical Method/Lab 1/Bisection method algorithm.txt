@@ -1,0 +1,78 @@
+- Lab 1
+    
+    **Bisection Method Algorithm**
+    
+    Step 1: Start
+    
+    Step 2 : Define a function f(x) and minimum error
+    
+    Step 3: Input 2 initial guesses x1 and x2
+    
+    Step 4: If [ f(x1) * f(x2) > 0 ] go to Step 2 else go to Step 5
+    
+    Step 5: While ( | (x2-x1) | > Error) repeat step 6 & 7.
+    
+    Step 6: Calculate $X = ( (x1 + x2) / 2 )$ 
+    
+    Step 7: If [ f(x2) * f(x1) < 0
+    
+                     set x2 = x0
+    
+                  Else
+    
+                         x1 = x0
+    ]         
+    
+    Step 8: Display the root x0
+    
+    Step 8: End
+
+
+
+# OUTPUT: -->
+
+python -u "d:\Semesters\4th_Sem\LAB\Numerical Method\Lab 1\lab1_Bisection_method.py"
+Enter the value for x1 : 1
+Enter the value for x2 : -1
+The root is  0.5
+The root is  0.375
+The root is  0.3125
+The root is  0.28125
+The root is  0.265625
+The root is  0.2578125
+The root is  0.255859375
+The root is  0.2548828125
+
+PS D:\Semesters\4th_Sem\LAB> python -u "d:\Semesters\4th_Sem\LAB\Numerical Method\Lab 1\lab1_Bisection_method.py"
+Enter the value for x1 : 11
+Enter the value for x2 : -2
+The initial guess doesn't include the root, guess again
+Enter the value for x1 : -7
+Enter the value for x2 : 12
+The root is  -2.25
+The root is  -2.17578125
+The root is  -2.138671875
+The root is  -2.1201171875
+The root is  -2.115478515625
+
+PS D:\Semesters\4th_Sem\LAB> python -u "d:\Semesters\4th_Sem\LAB\Numerical Method\Lab 1\lab1_Bisection_method.py"
+Enter the value for x1 : 19
+Enter the value for x2 : -9
+The root is  5.0
+The root is  -2.0
+The root is  -2.109375
+The root is  -2.11279296875
+The root is  -2.114501953125
+
+PS D:\Semesters\4th_Sem\LAB> python -u "d:\Semesters\4th_Sem\LAB\Numerical Method\Lab 1\lab1_Bisection_method.py"
+Enter the value for x1 : 10
+Enter the value for x2 : 19
+The initial guess doesn't include the root, guess again
+Enter the value for x1 : 1
+Enter the value for x2 : 2
+The root is  1.5
+The root is  1.75
+The root is  1.8125
+The root is  1.84375
+The root is  1.859375
+The root is  1.8603515625
