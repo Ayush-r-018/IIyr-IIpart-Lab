@@ -1,0 +1,14 @@
+-->
+Algorithm: - 
+
+Step 1: - Start
+2: - Define function f(x) & its derivate g(x)
+3: - Set Error = 0.001
+4: - Input initial guess x1
+5: - Ensure g(x1) != 0 if zero goto step 4.
+6: - Calculate x2 = x1 - ((f(x1))/(g(x1)))
+7: - Calculate err = | x2 - x1 |
+8: - Update x1 = x2
+9: - Check it err > Error repeat from step 6.
+10: - Print root x1
+11: - Stop

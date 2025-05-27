@@ -1,0 +1,23 @@
+—> Secant Method and NR Method
+    
+    Step 1: - Start
+    
+    2: - Define Function f(x)
+    
+    3: - Set Error = 0.001
+    
+    4: - Input two initial guesses
+    
+    5: - Enter a loop that repeats step 6. & 7.
+    
+                                          till | x2 - x1 | > Error
+    
+    6: - Compute: - x3 = $(x1.f(x2) - x2.f(x1)) / (f(x2) - f(x1))$
+    
+    7: - update $x1 = x2$
+    
+                         $x2 = x3$
+    
+    8: - Print root x3
+    
+    9: - Stop
