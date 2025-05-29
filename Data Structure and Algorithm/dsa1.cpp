@@ -1,10 +1,11 @@
 #include <iostream>
-#define MAXSIZE 5
 using namespace std;
+#define MAXSIZE 5
 
 class stack
 {
-    int data[MAXSIZE], bos, item, i;
+
+    int data[MAXSIZE], i, bos, item;
 
 public:
     stack()
@@ -21,14 +22,13 @@ public:
 
         else
         {
-            cout << "Enter the elements of stack:" << endl;
+            cout << "Enter the elements of stack:";
             cin >> item;
             for (int i = bos; i > 0; i--)
             {
                 data[i] = data[i - 1];
             }
             data[0] = item;
-            bos++;
         }
     }
 
@@ -38,16 +38,17 @@ public:
         {
             cout << "Stack is empty" << endl;
         }
+
         else
         {
-            int item = data[0];
+            item = data[0];
 
             for (i = 0; i < bos; i++)
             {
                 data[i] = data[i + 1];
             }
             bos--;
-            cout << "The popped item is:" << item << endl;
+            cout << "The popped item:" << item << endl;
         }
     }
 
@@ -62,24 +63,23 @@ public:
 
 int main()
 {
-    int choice;
     stack st;
-
+    int choice;
     do
     {
         cout << "Menu" << endl;
-        cout << "1.PUSH" << endl;
-        cout << "2.POP" << endl;
-        cout << "3.DISPLAY" << endl;
-        cout << "4.EXIT" << endl;
-        cout << "Enter your choice:";
+        cout << "1.push" << endl;
+        cout << "2.pop" << endl;
+        cout << "3.display" << endl;
+        cout << "4.exit" << endl;
+        cout << "Enter choice:" << endl;
         cin >> choice;
-
         switch (choice)
         {
         case 1:
             st.push();
             break;
+
         case 2:
             st.pop();
             break;
@@ -91,5 +91,6 @@ int main()
         case 4:
             return 0;
         }
+
     } while (choice != 4);
 }
