@@ -5,126 +5,164 @@ using namespace std;
 
 const int MAX_SIZE = 5;
 
-// Top-varying stack implementation
-class TopVaryingStack
+class Stack
 {
-private:
-    int top;
+protected:
     int arr[MAX_SIZE];
+    int position;
 
 public:
-    TopVaryingStack()
+    Stack(int initPos) : position(initPos) {}
+
+    virtual bool push(int value) = 0;
+    virtual int pop() = 0;
+
+    bool isEmpty() const
     {
-        top = -1; // Initialize top to -1 indicating empty stack
+        return (position == (this->isTopVarying() ? -1 : 0));
     }
 
-    bool push(int value)
+    void display() const
     {
-        if (top >= MAX_SIZE - 1)
+        if (isEmpty())
+        {
+            cout << (this->isTopVarying() ? "Top" : "Bottom")
+                 << "-varying stack is empty" << endl;
+            return;
+        }
+
+        cout << (this->isTopVarying() ? "Top" : "Bottom")
+             << "-varying stack elements: ";
+
+        if (this->isTopVarying())
+        {
+            for (int i = position; i >= 0; i--)
+            {
+                cout << arr[i] << " ";
+            }
+        }
+        else
+        {
+            for (int i = 0; i < position; i++)
+            {
+                cout << arr[i] << " ";
+            }
+        }
+        cout << endl;
+    }
+
+    virtual bool isTopVarying() const = 0;
+};
+
+class TopVaryingStack : public Stack
+{
+public:
+    TopVaryingStack() : Stack(-1) {}
+
+    bool push(int value) override
+    {
+        if (position >= MAX_SIZE - 1)
         {
             cout << "Stack Overflow (Top)" << endl;
             return false;
         }
-        arr[++top] = value;
+        arr[++position] = value;
         cout << value << " pushed to top-varying stack" << endl;
         return true;
     }
 
-    int pop()
+    int pop() override
     {
-        if (top < 0)
+        if (position < 0)
         {
             cout << "Stack Underflow (Top)" << endl;
             return -1;
         }
-        int value = arr[top--];
-        return value;
+        return arr[position--];
     }
 
-    bool isEmpty()
-    {
-        return (top < 0);
-    }
-
-    void display()
-    {
-        if (isEmpty())
-        {
-            cout << "Top-varying stack is empty" << endl;
-            return;
-        }
-        cout << "Top-varying stack elements: " << endl;
-        for (int i = top; i >= 0; i--)
-        {
-            cout << arr[i] << " ";
-        }
-        cout << endl;
-    }
+    bool isTopVarying() const override { return true; }
 };
 
-// Bottom-varying stack implementation
-class BottomVaryingStack
+class BottomVaryingStack : public Stack
 {
-private:
-    int bottom;
-    int arr[MAX_SIZE];
-
 public:
-    BottomVaryingStack()
-    {
-        bottom = 0; // Initialize bottom to 0 indicating empty stack
-    }
+    BottomVaryingStack() : Stack(0) {}
 
-    bool push(int value)
+    bool push(int value) override
     {
-        if (bottom >= MAX_SIZE)
+        if (position >= MAX_SIZE)
         {
             cout << "Stack Overflow (Bottom)" << endl;
             return false;
         }
-        arr[bottom++] = value;
+        arr[position++] = value;
         cout << value << " pushed to bottom-varying stack" << endl;
         return true;
     }
 
-    int pop()
+    int pop() override
     {
-        if (bottom <= 0)
+        if (position <= 0)
         {
             cout << "Stack Underflow (Bottom)" << endl;
             return -1;
         }
-        int value = arr[--bottom];
-        return value;
+        return arr[--position];
     }
 
-    bool isEmpty()
-    {
-        return (bottom <= 0);
-    }
-
-    void display()
-    {
-        if (isEmpty())
-        {
-            cout << "Bottom-varying stack is empty" << endl;
-            return;
-        }
-        cout << "Bottom-varying stack elements: ";
-        for (int i = 0; i < bottom; i++)
-        {
-            cout << arr[i] << " ";
-        }
-        cout << endl;
-    }
+    bool isTopVarying() const override { return false; }
 };
+
+void stackOperations(Stack *stack, const string &type)
+{
+    int option, value;
+
+    do
+    {
+        cout << "\n"
+             << type << " Stack Operations:" << endl
+             << "1. Push" << endl
+             << "2. Pop" << endl
+             << "3. Display" << endl
+             << "4. Exit" << endl
+             << "Enter your option: ";
+        cin >> option;
+
+        switch (option)
+        {
+        case 1:
+            cout << "Enter value to push: ";
+            cin >> value;
+            stack->push(value);
+            break;
+
+        case 2:
+            value = stack->pop();
+            if (value != -1)
+                cout << value << " popped from stack" << endl;
+            break;
+
+        case 3:
+            stack->display();
+            break;
+
+        case 4:
+            cout << "Exiting..." << endl;
+            break;
+
+        default:
+            cout << "Invalid option" << endl;
+        }
+    } while (option != 4);
+}
 
 int main()
 {
-    cout << "Stack Implementation using Array" << endl;
-    cout << "1. Top-varying Stack" << endl;
-    cout << "2. Bottom-varying Stack" << endl;
-    cout << "Enter your choice (1 or 2): ";
+    cout << "Stack Implementation using Array" << endl
+         << "1. Top-varying Stack" << endl
+         << "2. Bottom-varying Stack" << endl
+         << "Enter your choice (1 or 2): ";
 
     int choice;
     cin >> choice;
@@ -132,87 +170,12 @@ int main()
     if (choice == 1)
     {
         TopVaryingStack stack;
-        int option, value;
-
-        do
-        {
-            cout << "\nTop-varying Stack Operations:" << endl;
-            cout << "1. Push" << endl;
-            cout << "2. Pop" << endl;
-            cout << "3. Display" << endl;
-            cout << "4. Exit" << endl;
-            cout << "Enter your option: ";
-            cin >> option;
-
-            switch (option)
-            {
-            case 1:
-                cout << "Enter value to push: ";
-                cin >> value;
-                stack.push(value);
-                break;
-
-            case 2:
-                value = stack.pop();
-                if (value != -1)
-                    cout << value << " popped from stack" << endl;
-                break;
-
-            case 3:
-                stack.display();
-                break;
-
-            case 4:
-                cout << "Exiting..." << endl;
-                break;
-
-            default:
-                cout << "Invalid option" << endl;
-            }
-        } while (option != 4);
+        stackOperations(&stack, "Top-varying");
     }
-
     else if (choice == 2)
     {
         BottomVaryingStack stack;
-        int option, value;
-
-        do
-        {
-            cout << "\nBottom-varying Stack Operations:" << endl;
-            cout << "1. Push" << endl;
-            cout << "2. Pop" << endl;
-            cout << "3. Display" << endl;
-            cout << "4. Exit" << endl;
-            cout << "Enter your option: ";
-            cin >> option;
-
-            switch (option)
-            {
-            case 1:
-                cout << "Enter value to push: ";
-                cin >> value;
-                stack.push(value);
-                break;
-
-            case 2:
-                value = stack.pop();
-                if (value != -1)
-                    cout << value << " popped from stack" << endl;
-                break;
-
-            case 3:
-                stack.display();
-                break;
-
-            case 4:
-                cout << "Exiting..." << endl;
-                break;
-
-            default:
-                cout << "Invalid option" << endl;
-            }
-        } while (option != 4);
+        stackOperations(&stack, "Bottom-varying");
     }
     else
     {
