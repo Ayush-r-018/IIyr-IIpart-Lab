@@ -1,89 +1,102 @@
+// Implementation of circular queue using array
+
 #include <iostream>
-#include <conio.h>
+#include <conio.h> // For getch()
 using namespace std;
 
 class Queue
 {
-    int *arr;
-    int size;
-    int front, rear;
+private:
+    int *arr;     // Array to store queue elements
+    int front;    // Front index
+    int rear;     // Rear index
+    int capacity; // Maximum capacity
+    int count;    // Current number of elements
 
 public:
-    Queue(int n)
+    // Constructor
+    Queue(int size)
     {
-        size = n;
-        arr = new int[n];
-        front = rear = -1;
+        capacity = size;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+        count = 0;
     }
 
-    bool IsEmpty()
+    // Destructor
+    ~Queue()
     {
-        return front == -1;
+        delete[] arr;
     }
 
-    bool IsFull()
-    {
-        return rear == size - 1;
-    }
-
+    // Enqueue operation
     void enqueue(int value)
     {
-        if (IsFull())
+        if (isFull())
         {
-            cout << "Queue Overflow.\n";
+            cout << "Queue is full. Cannot enqueue.\n";
             return;
         }
-        if (IsEmpty())
-        {
-            front = rear = 0;
-        }
-        else
-        {
-            rear++;
-        }
+
+        rear = (rear + 1) % capacity;
         arr[rear] = value;
-        cout << "Enqueued " << value << " into the queue.\n";
+        count++;
+        cout << value << " enqueued to queue.\n";
     }
 
+    // Dequeue operation
     void dequeue()
     {
-        if (IsEmpty())
+        if (isEmpty())
         {
-            cout << "Queue Underflow.\n";
+            cout << "Queue is empty. Cannot dequeue.\n";
             return;
         }
-        cout << "Dequeued " << arr[front] << " from the queue.\n";
-        if (front == rear)
-        {
-            front = rear = -1;
-        }
-        else
-        {
-            front++;
-        }
+
+        cout << arr[front] << " dequeued from queue.\n";
+        front = (front + 1) % capacity;
+        count--;
     }
 
+    // Get front element
     int start()
     {
-        if (IsEmpty())
+        if (isEmpty())
         {
             cout << "Queue is empty.\n";
-            return -1;
+            return -1; // Return -1 to indicate empty queue
         }
         return arr[front];
     }
 
+    // Check if queue is empty
+    bool isEmpty()
+    {
+        return (count == 0);
+    }
+
+    // Check if queue is full
+    bool isFull()
+    {
+        return (count == capacity);
+    }
+
+    // Display all elements
     void display()
     {
-        if (IsEmpty())
+        if (isEmpty())
         {
             cout << "Queue is empty.\n";
             return;
         }
+
         cout << "Queue elements: ";
-        for (int i = front; i <= rear; i++)
+        int i = front;
+        for (int c = 0; c < count; c++)
         {
             cout << arr[i] << " ";
+            i = (i + 1) % capacity;
         }
         cout << endl;
     }
@@ -122,7 +135,7 @@ int main()
             break;
 
         case 3:
-            if (!q.IsEmpty())
+            if (!q.isEmpty())
             {
                 cout << "Element at front: " << q.start() << endl;
             }
