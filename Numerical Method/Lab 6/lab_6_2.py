@@ -1,4 +1,4 @@
-# Integration using the Simpson's 3/8 rule
+# Integration using the Simpson's 1/3 rule
 
 def f(x):
     return 1/(x**2 + 1)
