@@ -17,6 +17,5 @@ def main():
     a = 0  # Lower limit
     b = np.pi  # Upper limit
     n = 100  # Number of subintervals
-    result = trapezoidal_rule(a, b, n)
-    print(f"The integral of sin(x) from {a} to {b} using the trapezoidal rule with {n} subintervals is: {result}")
+    trapezoidal_rule(a, b, n)
 main()
